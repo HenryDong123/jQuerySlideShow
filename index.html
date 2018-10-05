@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="./sty.css" rel="stylesheet">
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"></script>
+</head>
+<body>
+<div class="window">
+    <div class="images" id="images">
+        <img src="./img/p1.jpg"
+             alt="1" width="450" height="300">
+        <img src="./img/p2.jpg"
+             alt="2" width="450" height="300">
+        <img src="./img/p3.jpg"
+             alt="3" width="450" height="300">
+        <img src="./img/p4.jpg"
+             alt="4" width="450" height="300">
+
+
+    </div>
+
+</div>
+<span id="buttons" class="buttons">
+    <span>第1张</span>
+    <span>第2张</span>
+    <span>第3张</span>
+    <span>第4张</span>
+</span>
+
+<script>
+
+    var allButtons = $('#buttons > span')
+
+    for (let i = 0; i < allButtons.length; i++) {
+        $(allButtons[i]).on('click', function (x) {
+            var index = $(x.currentTarget).index()
+            var p = index * -450
+            $('#images').css({
+                transform: 'translate(' + p + 'px)'
+            })
+
+            n = index
+            activeButton(allButtons.eq(n))
+
+
+        })
+    }
+
+    var n = 0
+    var size = allButtons.length
+    PlaySlide(n % size)
+
+    var timeId = setTime()
+
+    function setTime() {
+        return setInterval(() => {
+            n += 1
+            PlaySlide(n % size)
+
+
+
+        }, 2000)
+
+    }
+
+    function PlaySlide(index){
+        allButtons.eq(index).trigger('click')
+
+    }
+
+    function activeButton($button) {
+        $button
+            .addClass('red')
+            .siblings('.red').removeClass('red')
+
+
+    }
+
+    $('.window,.buttons').on('mouseenter', function () {
+        window.clearInterval(timeId)
+
+    })
+
+    $('.window,.buttons').on('mouseleave', function () {
+        timeId = setTime()
+
+    })
+
+
+</script>
+
+</body>
+</html>
