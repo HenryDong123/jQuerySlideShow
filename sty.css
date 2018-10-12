@@ -1,17 +1,31 @@
-.images{
-    display: flex;
-    align-items: flex-start;
-    transition: all 0.5s;
+*{margin:0;padding:0;}
+*{box-sizing: border-box;}
 
-}
-.images > img{
-    vertical-align: top;
-}
 .window{
     width: 450px;
+    height: 300px;
+    margin: 20px auto;
     overflow: hidden;
 }
+.images{
+    position: relative;
+}
+.images > img{
+    width: 100%;
+    transition: all 1500ms;
+    position: absolute;
+    top: 0;
+}
 
-.red{
-    color: red;
+.images > img.current{
+    left: 0;
+    transform: translateX(0);
+    z-index: 1;
+}
+.images > img.leave{
+    transform: translateX(-100%);
+    z-index: 1;
+}
+.images > img.enter{
+    transform: translateX(100%);
 }
