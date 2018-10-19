@@ -1,14 +1,64 @@
 let $buttons = $('#buttonWrapper>button')
 let $slides = $('#slides')
-
-$buttons.eq(0).on('click',function () {
-    $slides.css({transform:'translateX(0px)'})
+let $images = $slides.children('img')
+let current = 0
+cloneSlides()
+$slides.css({transform:'translateX(-450px)'})
+bindEvents()
+$('#previous').on('click', function () {
+    slideTo(current-1)
+})
+$('#next').on('click', function () {
+    slideTo(current+1)
 })
 
-$buttons.eq(1).on('click', function () {
-    $slides.css({transform: 'translateX(-450px)'})
-})
 
-$buttons.eq(2).on('click', function () {
-    $slides.css({transform: 'translateX(-900px)'})
-})
+////
+function cloneSlides(){
+    let $firstCopy = $images.eq(0).clone(true)
+    let $lastCopy = $images.eq($images.length-1).clone(true)
+
+    $slides.append($firstCopy)
+    $slides.prepend($lastCopy)
+}
+function bindEvents(){
+    $('#buttonWrapper').on('click', 'button', function (e) {
+        let $button = $(e.currentTarget)
+        let index = $button.index()
+        slideTo(index)
+    })
+
+}
+function slideTo(index) {
+    if(index> $buttons.length-1){
+        index = 0
+    }else if(index<0){
+        index = $buttons.length-1
+    }
+
+    if (current === $buttons.length-1 && index ===0) {
+        //最后一张到第一张
+        $slides.css({transform:`translateX(${-($buttons.length +1) * 450}px)`})
+            .one('transitionend', function () {
+                $slides.hide()
+                    .offset()
+                $slides.css({transform: `translateX(${-(index+1) * 450}px)`})
+                    .show()
+            })
+
+    }else if (current === 0 && index === $buttons.length-1) {
+        //第一张到最后一张
+        $slides.css({transform:`translateX(0px)`})
+            .one('transitionend', function () {
+                $slides.hide()
+                    .offset()
+                $slides.css({transform: `translateX(${-(index+1) * 450}px)`})
+                    .show()
+            })
+
+    }else {
+        $slides.css({transform:`translateX(${- (index+1) *450}px)`})
+    }
+    current = index
+
+}
