@@ -12,6 +12,20 @@ $('#next').on('click', function () {
     slideTo(current+1)
 })
 
+let timer = setInterval(function () {
+    slideTo(current+1)
+},2500)
+
+$('#container').on('mouseenter', function () {
+    window.clearInterval(timer)
+})
+$('#container').on('mouseleave', function () {
+    timer =setInterval(function () {
+        slideTo(current+1)
+    },2500)
+})
+
+
 
 ////
 function cloneSlides(){

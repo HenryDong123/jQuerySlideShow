@@ -1,5 +1,10 @@
 *{margin:0;padding:0;}
 *{box-sizing: border-box;}
+.container{
+    width: 450px;
+    height: 300px;
+    margin: 20px auto;
+}
 
 .window{
     width: 450px;
